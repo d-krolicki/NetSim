@@ -9,3 +9,13 @@ plik nagłówkowy "factory.hpp" zawierający definicję szablonu klasy NodeColle
 plik nagłówkowy "reports.hpp" zawierający definicje klas SpecificTurnsReportNotifier i IntervalReportNotifier, oraz deklaracje funkcji generate_structure_report() i generate_simulation_turn_report()
 plik nagłówkowy "simulation.hpp" zawierający deklarację funkcji simulate()
 pliki źródłowe "package.cpp", "storage_types.cpp", "nodes.cpp", "helpers.cpp", "factory.cpp", "reports.cpp" i "simulation.cpp" zawierające definicje funkcjonalności odpowiednich plików nagłówkowych (oraz ewentualne definicje dodatkowych funkcjonalności, niezbędnych wyłącznie w ramach danego pliku źródłowego)
+
+Jaką funkcjonalność testować?
+- class SpecificTurnsReportNotifier
+  czy powiadomienie w dobrej turze?
+
+- class IntervalReportNotifier
+  czy powiadomienie w dobrej turze?
+
+- simulate()
+  czy cała tura symulacji odbywa się zgodnie z planem (dla pewnej określonej konfiguracji sieci)?
