@@ -1,9 +1,0 @@
-poniedziałek, 10 stycznia 2022, 23:59
-
-plik nagłówkowy "package.hpp" zawierający definicję klasy Package
-plik nagłówkowy "types.hpp" zawierający definicję aliasów ElementID, Time, TimeOffset i ProbabilityGenerator
-plik nagłówkowy "storage_types.hpp" zawierający definicje klas IPackageStockpile, IPackageQueue i PackageQueue oraz typu wyliczeniowego PackageQueueType
-plik nagłówkowy "nodes.hpp" zawierający definicję klas IPackageReceiver, Storehouse, ReceiverPreferences, PackageSender, Ramp i Worker oraz typu wyliczeniowego ReceiverType
-plik nagłówkowy "helpers.hpp" zawierający ewentualne pomocnicze obiekty i funkcje globalne (np. generator liczb losowych)
-plik nagłówkowy "factory.hpp" zawierający definicję szablonu klasy NodeCollection oraz definicję klasy Factory
-pliki źródłowe "package.cpp", "storage_types.cpp", "nodes.cpp", "helpers.cpp" i "factory.cpp" zawierające definicje funkcjonalności odpowiednich plików nagłówkowych (oraz ewentualne definicje dodatkowych funkcjonalności, niezbędnych wyłącznie w ramach danego pliku źródłowego)
