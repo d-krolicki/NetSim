@@ -1,0 +1,3 @@
+Pytania na ZPO:
+1. Czy obiekty Package będą miały dynamicznie alokowaną pamięć? Jak zwolnić pamięć dla obiektu?
+2. Co to jest Package(ElementID) w UML'u?
