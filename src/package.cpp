@@ -3,3 +3,7 @@
 //
 
 #include "../include/package.hpp"
+
+Package::~Package(){
+
+};
