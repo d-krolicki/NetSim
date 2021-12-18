@@ -7,3 +7,23 @@ plik nagłówkowy "nodes.hpp" zawierający definicję klas IPackageReceiver, Sto
 plik nagłówkowy "helpers.hpp" zawierający ewentualne pomocnicze obiekty i funkcje globalne (np. generator liczb losowych)
 plik nagłówkowy "factory.hpp" zawierający definicję szablonu klasy NodeCollection oraz definicję klasy Factory
 pliki źródłowe "package.cpp", "storage_types.cpp", "nodes.cpp", "helpers.cpp" i "factory.cpp" zawierające definicje funkcjonalności odpowiednich plików nagłówkowych (oraz ewentualne definicje dodatkowych funkcjonalności, niezbędnych wyłącznie w ramach danego pliku źródłowego)
+
+
+Jaką funkcjonalność testować?
+- class PackageSender:
+  wysyłanie półproduktu: czy po wysłaniu bufor jest pusty?
+
+- class ReceiverPreferences:
+  dodawanie/usuwanie odbiorcy: skalowanie prawdopodobieństwa
+  wybór odbiorcy: czy odpowiedni wybrany, gdy damy “zmockowany” generator liczb losowych?
+
+- class Ramp:
+  dostawa: czy dostawa odbywa się we właściwej turze? czy półprodukt trafia od razu do bufora?
+
+- class Worker
+  odbiór półproduktu: czy poprawnie wstawiony do kolejki?
+  wykonywanie pracy: czy robotnik przetwarza półprodukt odpowiednią liczbę tur? czy przekazuje dalej odpowiedni półprodukt?
+
+- class Storehouse:
+  odbiór półproduktu: czy poprawnie wstawiony do magazynu?
+
