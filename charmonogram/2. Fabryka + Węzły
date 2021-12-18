@@ -10,6 +10,7 @@ pliki źródłowe "package.cpp", "storage_types.cpp", "nodes.cpp", "helpers.cpp"
 
 
 Jaką funkcjonalność testować?
+Węzły:
 - class PackageSender:
   wysyłanie półproduktu: czy po wysłaniu bufor jest pusty?
 
@@ -26,4 +27,13 @@ Jaką funkcjonalność testować?
 
 - class Storehouse:
   odbiór półproduktu: czy poprawnie wstawiony do magazynu?
+
+Fabryka:
+- class NodeCollection<Node>:
+  wyszukiwanie po ID: 2 obiekty, czy zostanie zwrócony poprawny?
+  usuwanie po ID: 2 obiekty, czy zostanie usunięty poprawny?
+
+- class Factory:
+  kontrola spójności sieci
+  usuwanie odbiorcy: czy odpowiednie połączenia z nadawcami zostaną usunięte?
 
