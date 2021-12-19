@@ -5,12 +5,27 @@
 #ifndef NETSIM_STORAGE_TYPES_HPP
 #define NETSIM_STORAGE_TYPES_HPP
 
+#include <list>
+#include "package.hpp"
+
 enum class PackageQueueType{
     FIFO,
     LIFO
 };
 
 class IPackageStockpile{
+public:
+    using const_iterator = std::list<Package>::const_iterator;
+    virtual bool empty() const;
+    virtual size_t size() const;
+    void push(Package&&);
+    ~IPackageStockpile();
+};
+
+class IPackageQueue{
+public:
+
+private:
 
 };
 
@@ -23,12 +38,8 @@ private:
 
 
 
-class IPackageQueue{
-public:
 
-private:
-
-};
 
 
 #endif //NETSIM_STORAGE_TYPES_HPP
+
