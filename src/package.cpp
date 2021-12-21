@@ -5,25 +5,35 @@
 #include "../include/package.hpp"
 #include <stdexcept>
 
+std::set<ElementID> Package::ids_={};
+std::set<ElementID> Package::freed_ids_={};
+
 Package::Package(){
-    ElementID id = 1;
-    if(ids_.empty()){   //jezeli ids_ jest puste
-        ids_.push_back(id);
+    if(!Package::freed_ids_.empty()){
+        ElementID id = *Package::freed_ids_.begin();
+        for (auto el: Package::freed_ids_) {
+            if(el<id){
+                id =el;
+            }
+        }
+        id_ = id;
+        Package::ids_.insert(id);
     }
-    else if(not(freed_ids_.empty())){
-        ids_.push_back(*std::min_element(freed_ids_.begin(), freed_ids_.end()));    //jezeli mamy jakies zwolnione id
-    }
-    else{    //gdy freed_ids_ jest puste, to id =  max(ids_) + 1
-        ids_.push_back(*std::max_element(ids_.begin(), ids_.end()) + 1);
+    else{
+        ElementID id = *Package::ids_.begin();
+        for (const auto el: Package::ids_) {
+            if(el>id){
+                id =el;
+            }
+        }
+        id_ = id+1;
+        Package::ids_.insert(id+1);
     }
 }
 
 Package::~Package(){
-    ElementID id = get_id();
-    if(not(std::find(freed_ids_.cbegin(), freed_ids_.cend(), id) != freed_ids_.cend())){    //jezeli id nie ma jeszcze w freed_ids_ (na ewentualne potrzeby testow)
-        freed_ids_.push_back(id);   //dodajemy ID do wolnych
-    }
-    ids_.erase(std::find(ids_.begin(), ids_.end(), id));    //usuwamy ID z zajetych
+    freed_ids_.insert(id_);
+    ids_.erase(id_);
 }
 
 Package::Package(ElementID id){
@@ -32,21 +42,13 @@ Package::Package(ElementID id){
     }
 
     id_ = id;
-    ids_.push_back(id);
-    if(std::find(freed_ids_.begin(), freed_ids_.end(), id) != freed_ids_.end()){
-        freed_ids_.erase(std::find(freed_ids_.begin(), freed_ids_.end(), id));
-    }
+    ids_.insert(id);
+    freed_ids_.erase(id);
 }
 
-Package& Package::operator=(Package&& other) noexcept {
-    if (id_ != blank_id_) {
-        if (std::find(freed_ids_.begin(), freed_ids_.end(), id_) != freed_ids_.end()) {
-            freed_ids_.erase(std::find(freed_ids_.begin(), freed_ids_.end(), id_));
-        }
-        ids_.erase(std::find(ids_.begin(), ids_.end(), id_));
-    }
+
+Package &Package::operator=(Package const& other) noexcept {
     id_ = other.id_;
-    other.id_ = blank_id_;
 
     return *this;
 
