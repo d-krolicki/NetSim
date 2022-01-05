@@ -37,10 +37,6 @@ Package::~Package(){
 }
 
 Package::Package(ElementID id){
-    if(std::find(ids_.cbegin(), ids_.cend(), id) != ids_.cend()){
-        throw std::invalid_argument("ID o numerze " + std::to_string(id) + " jest juz w uzyciu.");
-    }
-
     id_ = id;
     ids_.insert(id);
     freed_ids_.erase(id);
