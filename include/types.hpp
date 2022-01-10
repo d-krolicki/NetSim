@@ -6,5 +6,8 @@
 #define NETSIM_TYPES_HPP
 
 using ElementID = int;
+using Time = int;
+using TimeOffset = int;
+using ProbabilityGenerator = std::function<double()>;
 
 #endif //NETSIM_TYPES_HPP
