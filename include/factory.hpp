@@ -48,8 +48,10 @@ public:
     void remove_ramp(ElementID id){Ramps.remove_by_id(id);}
     NodeCollection<Ramp>::iterator find_ramp_by_id(ElementID id){return Ramps.find_by_id(id);}
     NodeCollection<Ramp>::const_iterator find_ramp_by_id(ElementID id) const {return Ramps.find_by_id(id);}
-    NodeCollection<Ramp>::const_iterator ramp_cbegin()const{return Ramps.cbegin();}
-    NodeCollection<Ramp>::const_iterator ramp_cend()const{return Ramps.cend();}
+    NodeCollection<Ramp>::const_iterator ramp_cbegin() const{return Ramps.cbegin();}
+    NodeCollection<Ramp>::const_iterator ramp_cend() const{return Ramps.cend();}
+    NodeCollection<Ramp>::const_iterator ramp_begin() const{return Ramps.begin();}
+    NodeCollection<Ramp>::const_iterator ramp_end() const{return Ramps.end();}
 
     void add_worker(Worker&& w){Workers.add(w);}
     void remove_worker(ElementID id){this -> remove_receiver(Workers,id);}
@@ -57,6 +59,8 @@ public:
     NodeCollection<Worker>::const_iterator find_worker_by_id(ElementID id) const{return Workers.find_by_id(id);}
     NodeCollection<Worker>::const_iterator worker_cbegin()const{return Workers.cbegin();}
     NodeCollection<Worker>::const_iterator worker_cend()const{return Workers.cend();}
+    NodeCollection<Worker>::const_iterator worker_begin()const{return Workers.begin();}
+    NodeCollection<Worker>::const_iterator worker_end()const{return Workers.end();}
 
     void add_storehouse(Storehouse&& s){Storehouses.add(s);}
     void remove_storehouse(ElementID id){this -> remove_receiver(Storehouses,id);}
@@ -64,6 +68,8 @@ public:
     NodeCollection<Storehouse>::const_iterator find_storehouse_by_id(ElementID id) const{return Storehouses.find_by_id(id);}
     NodeCollection<Storehouse>::const_iterator storehouse_cbegin()const{return Storehouses.cbegin();}
     NodeCollection<Storehouse>::const_iterator storehouse_cend()const{return Storehouses.cend();}
+    NodeCollection<Storehouse>::const_iterator storehouse_begin()const{return Storehouses.begin();}
+    NodeCollection<Storehouse>::const_iterator storehouse_end()const{return Storehouses.end();}
 
     bool is_consistent();
     void do_deliveries(Time);
@@ -101,5 +107,18 @@ private:
     NodeCollection<Worker> Workers;
     NodeCollection<Storehouse> Storehouses;
 };
+//////////////
+enum class ElementType{
+    LOADING_RAMP, WORKER, STORHOUSE, LINK
+};
+
+struct ParsedLineData {
+    ElementType element_type;
+    std::map<std::string, std::string> parameters;
+};
+
+ParsedLineData parse_line(const std::string& line);
+Factory load_factory_structure(std::istream& is);
+void save_factory_structure(Factory& factory, std::ostream& os);
 
 #endif //NETSIM_FACTORY_HPP

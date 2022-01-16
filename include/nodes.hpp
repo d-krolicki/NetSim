@@ -45,25 +45,26 @@ public:
     preferences_t preferences_;
     void add_receiver(IPackageReceiver* r);
     void remove_receiver(IPackageReceiver* r);
-    double get_probability(IPackageReceiver *key) {return preferences_[key];}
+
+    [[maybe_unused]] double get_probability(IPackageReceiver *key) {return preferences_[key];}
     IPackageReceiver* choose_receiver();
     const preferences_t& get_preferences() const { return preferences_; }
     iterator begin()              { return preferences_.begin();  }
     iterator end()                { return preferences_.end();    }
-    const_iterator cbegin() const { return preferences_.cbegin(); }
-    const_iterator cend()   const { return preferences_.cend();   }
+    [[maybe_unused]]const_iterator cbegin() const { return preferences_.cbegin(); }
+    [[maybe_unused]]const_iterator cend()   const { return preferences_.cend();   }
 };
 
 class PackageSender
 {
 private:
-    std::optional<Package> mBuffer;
+    std::optional<Package> mBuffer = std::nullopt;
 public:
     ReceiverPreferences receiver_preferences_;
     PackageSender(PackageSender&& ) = default;
     explicit PackageSender() : mBuffer() , receiver_preferences_() {};
     void send_package();
-    std::optional<Package>& get_sending_buffer() {return mBuffer;};
+    std::optional<Package>& get_sending_buffer() const {return (std::optional<Package>&) mBuffer;};
 protected:
     void push_package(Package&& pck);
 };
@@ -76,7 +77,7 @@ private:
 public:
     Ramp(ElementID id, TimeOffset di) :PackageSender(), mOffset(di), mID(id) {};
     void deliver_goods(Time t);
-    TimeOffset get_delivery_interval()  const { return mOffset; }
+    [[maybe_unused]] TimeOffset get_delivery_interval()  const { return mOffset; }
     ElementID get_id()                  const { return mID;     }
 };
 
@@ -91,9 +92,9 @@ private:
 public:
     Worker(ElementID id, TimeOffset pd, std::unique_ptr<IPackageQueue> queue_ptr);
     void do_work(Time t);
-    TimeOffset get_processing_duration()     const { return mOffset; }
-    Time get_package_processing_start_time() const { return mTime;   }
-    ElementID get_ID_from_buffer() const          { return mWorkerBuffer->get_id();}
+    [[maybe_unused]] TimeOffset get_processing_duration()     const { return mOffset; }
+    [[maybe_unused]] Time get_package_processing_start_time() const { return mTime;   }
+    [[maybe_unused]] ElementID get_ID_from_buffer() const          { return mWorkerBuffer->get_id();}
     ElementID get_id()const override { return mID; }
     void receive_package(Package&& pck) override;
     ReceiverType get_receiver_type() const override { return ReceiverType::WORKER; }
@@ -101,25 +102,31 @@ public:
     iterator end() const override   { return  mUniquePtr->end()  ; }
     iterator cbegin()const override { return  mUniquePtr->cbegin() ; }
     iterator cend() const override  { return  mUniquePtr->cend() ; }
-
+////////////////////////
+    [[maybe_unused]] IPackageQueue* get_queue() const { return mUniquePtr.get(); }
+    [[maybe_unused]] std::optional<Package>& get_processing_buffer() const { return (std::optional<Package>&) mWorkerBuffer; }
+    inline static Time t_ = 1;
 };
 
 class Storehouse : public IPackageReceiver
 {
 private:
-    std::unique_ptr<IPackageStockpile> mUniquePtr;
     ElementID mID;
+    std::unique_ptr<IPackageStockpile> mUniquePtr;
 
 public:
-    Storehouse(ElementID id) : mID(id) {}
-    Storehouse(ElementID id, std::unique_ptr<IPackageStockpile> d);
+    Storehouse(ElementID id, std::unique_ptr<IPackageStockpile> d = std::make_unique<PackageQueue>(PackageQueueType::FIFO)) : mID(id), mUniquePtr(std::move(d)) {}
+
     ElementID get_id() const override { return mID; }
     void receive_package(Package&& pck) override;
     ReceiverType get_receiver_type() const override { return ReceiverType::STOREHOUSE; }
+
     iterator begin() const override { return mUniquePtr->begin() ; }
     iterator end() const override   { return mUniquePtr->end()   ; }
-    iterator cbegin()const override { return mUniquePtr->cbegin(); }
+    iterator cbegin() const override { return mUniquePtr->cbegin(); }
     iterator cend() const override  { return mUniquePtr->cend()  ; }
+    /////////////////
+    [[maybe_unused]] IPackageStockpile* get_queue() const { return mUniquePtr.get(); }
 };
 
 
