@@ -64,6 +64,7 @@ Worker::Worker(ElementID id, TimeOffset pd, std::unique_ptr<IPackageQueue> queue
     mID = id; mOffset = pd;
     mUniquePtr = std::move(queue_ptr);
 }
+
 void Worker::do_work(Time t)
 {
     if((t-mTime)% mOffset - 1 == 0)
@@ -80,11 +81,7 @@ void Worker::do_work(Time t)
 
 
 }
-Storehouse::Storehouse(ElementID id, std::unique_ptr<IPackageStockpile> d)
-{
-    mID = id;
-    mUniquePtr = std::move(d);
-}
+
 
 void Storehouse::receive_package(Package&& p)
 {
