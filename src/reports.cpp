@@ -5,7 +5,6 @@
 #include "../include/reports.hpp"
 
 #include "reports.hpp"
-#include "simulation.hpp"
 #include "factory.hpp"
 #include "nodes.hpp"
 
